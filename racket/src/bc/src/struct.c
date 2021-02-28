@@ -1750,10 +1750,14 @@ static Scheme_Object *check_output_port_property_value_ok(int argc, Scheme_Objec
 
 static Scheme_Object *check_cpointer_property_value_ok(int argc, Scheme_Object *argv[])
 {
+#ifndef __EMSCRIPTEN__
   return check_indirect_property_value_ok("guard-for-prop:cpointer", 
                                           scheme_is_cpointer, 1,
                                           "(or/c cpointer? (any/c . -> . any) exact-nonnegative-integer?)",
                                           argc, argv);
+#else
+  return scheme_true;
+#endif
 }
 
 /*========================================================================*/

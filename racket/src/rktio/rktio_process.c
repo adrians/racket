@@ -1665,7 +1665,9 @@ int rktio_close_fds_len()
 # elif defined(__ANDROID__)
   i = sysconf(_SC_OPEN_MAX);
 # else
+#  ifndef __EMSCRIPTEN__
   i = getdtablesize();
+#  endif
 # endif
 
   return i;

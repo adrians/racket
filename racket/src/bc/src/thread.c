@@ -66,6 +66,10 @@ extern int scheme_jit_malloced;
 # define scheme_jit_malloced 0
 #endif
 
+#ifdef DONT_USE_FOREIGN
+# define scheme_extract_pointer(x) NULL
+#endif
+
 SHARED_OK int scheme_init_load_on_demand = 1;
 
 /*========================================================================*/
@@ -2858,9 +2862,11 @@ static Scheme_Object *unsafe_register_process_global(int argc, Scheme_Object *ar
   
   if (!SCHEME_BYTE_STRINGP(argv[0]))
     scheme_wrong_contract("unsafe-register-process-global", "bytes?", 0, argc, argv);
+#ifndef __EMSCRIPTEN__
   if (!scheme_is_cpointer(argv[1]))
     scheme_wrong_contract("unsafe-register-process-global", "cpointer?", 1, argc, argv);
-  
+#endif
+
   val = scheme_register_process_global(SCHEME_BYTE_STR_VAL(argv[0]),
                                        scheme_extract_pointer(argv[1]));
 
@@ -8935,10 +8941,6 @@ typedef void (mzOSAPI *gccb_OSapi_Ptr_Int_to_Void)(void*, int);
 typedef void (mzOSAPI *gccb_OSapi_Ptr_Ptr_to_Void)(void*, void*);
 typedef void (mzOSAPI *gccb_OSapi_Ptr_Four_Ints_Ptr_Int_Int_Long_to_Void)(void*, int, int, int, int, 
                                                                           void*, int, int, long);
-
-#ifdef DONT_USE_FOREIGN
-# define scheme_extract_pointer(x) NULL
-#endif
 
 static void run_gc_callbacks(int pre) 
   XFORM_SKIP_PROC

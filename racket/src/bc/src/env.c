@@ -319,7 +319,9 @@ static void init_startup_env(void)
   builtin_unsafe_start = builtin_ref_counter;
   scheme_init_unsafe_linklet(env);
   init_unsafe(env);
+#ifndef DONT_USE_FOREIGN
   init_foreign(env);
+#endif
   
 #if USE_COMPILED_STARTUP
   if (builtin_ref_counter != EXPECTED_PRIM_COUNT) {

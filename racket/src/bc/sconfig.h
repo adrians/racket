@@ -806,6 +806,20 @@
 
 #endif
 
+/************** Emscripten  ****************/
+
+#if defined(__EMSCRIPTEN__)
+
+# define SCHEME_OS "emscripten"
+# define SCHEME_ARCH "emscripten"
+
+# include "uconfig.h"
+
+# define FLAGS_ALREADY_SET
+
+#endif
+
+
 /************** (END KNOWN ARCHITECTURE/SYSTEMS) ****************/
 
 #ifndef SCHEME_PLATFORM_LIBRARY_SUBPATH

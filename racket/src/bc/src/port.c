@@ -6780,7 +6780,9 @@ static void block_timer_signals(int block)
       if (sigismember(&sigs, SIGPROF)) {
         sigprocmask(SIG_SETMASK, NULL, &sigs);
         sigdelset(&sigs, SIGPROF);
+#ifndef __EMSCRIPTEN__
         sigsuspend(&sigs);
+#endif
         sigemptyset(&sigs);
       } else
         break;

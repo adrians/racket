@@ -506,11 +506,15 @@ static Scheme_Env *place_instance_init(void *stack_base, int initial_main_os_thr
 
   REGISTER_SO(scheme_namespace_to_env);
   scheme_namespace_to_env = scheme_make_bucket_table(5, SCHEME_hash_weak_ptr);
-  env = scheme_make_empty_env();
- 
-  boot_module_resolver();
 
-  scheme_init_resolver_config();
+  // runtime error, uncaught longjmp
+  //env = scheme_make_empty_env();
+
+  // runtime error, uncaught longjmp
+  // boot_module_resolver();
+
+  // runtime error, uncaught longjmp
+  // scheme_init_resolver_config();
 
   scheme_starting_up = 0;
 

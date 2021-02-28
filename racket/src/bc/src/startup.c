@@ -32,7 +32,8 @@ static Scheme_Linklet *startup_linklet()
 {
 #define EVAL_ONE_STR(str) return eval_linklet_string(str, -1, 0)
 #define EVAL_ONE_SIZED_STR(str, len) return eval_linklet_string(str, len, 1)
-  EVAL_STARTUP;
+  // runtime error, infinite recursion
+  // EVAL_STARTUP;
 }
 
 void scheme_init_startup(void)

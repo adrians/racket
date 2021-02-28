@@ -720,7 +720,8 @@ void scheme_init_thread_places(void) {
   REGISTER_SO(place_local_misc_table);
   REGISTER_SO(gc_info_prefab);
   REGISTER_SO(on_atomic_timeout_data);
-  gc_info_prefab = scheme_lookup_prefab_type(scheme_intern_symbol("gc-info"), 10);
+  // runtime error, infinite recursion
+  //gc_info_prefab = scheme_lookup_prefab_type(scheme_intern_symbol("gc-info"), 10);
 }
 
 void scheme_init_inspector() {

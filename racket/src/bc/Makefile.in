@@ -91,7 +91,6 @@ normal-bin:
 
 common:
 	$(MAKE) g-c
-	$(MAKE) @FOREIGNTARGET@
 	$(MAKE) rktio-lib
 
 cgc:
@@ -143,7 +142,6 @@ both:
 
 racketlib:
 	$(MAKE) g-c
-	$(MAKE) @FOREIGNTARGET@
 	$(MAKE) mzlibrary 
 
 dynlib:
@@ -171,11 +169,6 @@ gc.@LIBSFX@:
 	$(AR) $(ARFLAGS) @GCDIR@/gc.@LIBSFX@ @GCDIR@/*.@LTO@
 
 # Compilation of the foreign libraries (this compiles all of them)
-foreign-stuff:
-	cd $(FOREIGN_DIR); $(MAKE) all
-
-foreign-stub:
-	cd $(FOREIGN_DIR); $(MAKE) stub
 
 rktio-lib:
 	cd rktio; $(MAKE) CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)"
@@ -217,8 +210,8 @@ LIBRKTIO_FOR_LIB_a = $(LIBRKTIO)
 LIBRKTIO_FOR_DLL = $(LIBRKTIO_FOR_DLL_@LIBSFX@)
 LIBRKTIO_FOR_LIB = $(LIBRKTIO_FOR_LIB_@LIBSFX@)
 
-libracket.@LIBSFX@: src/*.@LTO@ $(@FOREIGN_IF_USED@_LIB) $(LIBRKTIO_FOR_DLL)
-	$(AR) $(ARFLAGS) libracket.@LIBSFX@ src/*.@LTO@ $(@FOREIGN_IF_USED@_OBJSLIB) $(LIBRKTIO_FOR_DLL) @LIBRACKET_DEP@
+libracket.@LIBSFX@: src/*.@LTO@ $(LIBRKTIO_FOR_DLL)
+	$(AR) $(ARFLAGS) libracket.@LIBSFX@ src/*.@LTO@ $(LIBRKTIO_FOR_DLL) @LIBRACKET_DEP@
 
 # Irix sproc, only
 sproc.@LTO@: @GCDIR@/sproc.@LTO@
@@ -655,7 +648,6 @@ SRC_MAKEFILES = $(srcdir)/Makefile.in \
                 $(srcdir)/src/Makefile.in $(srcdir)/gracket/Makefile.in \
                 $(srcdir)/gc2/Makefile.in $(srcdir)/gracket/gc2/Makefile.in \
                 $(srcdir)/../rktio/Makefile.in $(srcdir)/dynsrc/Makefile.in \
-                $(srcdir)/foreign/Makefile.in $(srcdir)/foreign/libffi/Makefile.in
 
 # Only fire the `Makefile` rule explicitly via `reconfigure`
 NO_RECONFIG =
